@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 public class SnippetServiceImpl implements SnippetService {
 
     @Override
-    public ResponseEntity<String> create(String body, long expiration) {
+    public ResponseEntity<String> create(String body, long expirationTime) {
         return null;
     }
 

@@ -4,7 +4,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface SnippetService {
 
-    ResponseEntity<String> create(String body, long expiration);
+    ResponseEntity<String> create(String body, long expirationTime);
 
     ResponseEntity<String> viewAll();
 
