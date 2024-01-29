@@ -19,18 +19,18 @@ public class SnippetController {
         return snippetService.create(body, expirationTime);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<String> viewAll() {
         return snippetService.viewAll();
     }
 
-    @PutMapping
-    public ResponseEntity<String> edit(@RequestParam long id, @RequestBody String body) {
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<String> edit(@PathVariable long id, @RequestBody String body) {
         return snippetService.update(id, body);
     }
 
-    @DeleteMapping
-    public ResponseEntity<String> delete(long id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> delete(@PathVariable long id) {
         return snippetService.delete(id);
     }
 
