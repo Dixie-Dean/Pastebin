@@ -1,6 +1,7 @@
 package com.dixie.pastebin.controller;
 
 import com.dixie.pastebin.dto.SnippetCreationDTO;
+import com.dixie.pastebin.dto.SnippetDTO;
 import com.dixie.pastebin.dto.SnippetUpdateDTO;
 import com.dixie.pastebin.entity.Snippet;
 import com.dixie.pastebin.service.SnippetService;
@@ -28,6 +29,11 @@ public class SnippetController {
     @GetMapping("/all")
     public List<Snippet> viewAll() {
         return snippetService.viewAll();
+    }
+
+    @GetMapping("/snippet/{id}")
+    public SnippetDTO getSnippet(@PathVariable long id) {
+        return snippetService.getSnippet(id);
     }
 
     @PutMapping("/edit/{id}")

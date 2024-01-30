@@ -21,6 +21,8 @@ public interface SnippetRepository extends JpaRepository<Snippet, Long> {
     @Query(value = "select * from pastebin.snippets", nativeQuery = true)
     List<Snippet> getAllSnippets();
 
+    Snippet getSnippetsById(long id);
+
     @Query(value = "update pastebin.snippets set body = :body " +
             "where id = :id returning 'Snippet updated!'", nativeQuery = true)
     String update(@Param("id") long id, @Param("body") String body);

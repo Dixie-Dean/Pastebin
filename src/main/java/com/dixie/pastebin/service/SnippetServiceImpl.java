@@ -1,8 +1,10 @@
 package com.dixie.pastebin.service;
 
 import com.dixie.pastebin.dto.SnippetCreationDTO;
+import com.dixie.pastebin.dto.SnippetDTO;
 import com.dixie.pastebin.dto.SnippetUpdateDTO;
 import com.dixie.pastebin.entity.Snippet;
+import com.dixie.pastebin.mapper.SnippetMapper;
 import com.dixie.pastebin.repository.SnippetRepository;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.stereotype.Service;
@@ -11,17 +13,20 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class SnippetServiceImpl implements SnippetService {
 
     private final SnippetRepository snippetRepository;
+
+    private final SnippetMapper snippetMapper;
+
     private final AtomicLong idCounter = new AtomicLong(0);
 
-    public SnippetServiceImpl(SnippetRepository snippetRepository) {
+    public SnippetServiceImpl(SnippetRepository snippetRepository, SnippetMapper snippetMapper) {
         this.snippetRepository = snippetRepository;
+        this.snippetMapper = snippetMapper;
     }
 
     @Override
@@ -33,7 +38,7 @@ public class SnippetServiceImpl implements SnippetService {
         builder.setScheme("http");
         builder.setHost("localhost");
         builder.setPort(8080);
-        builder.setPath("/pastebin/" + snippetID);
+        builder.setPath("/pastebin/snippet/" + snippetID);
         URL url = builder.build().toURL();
 
         Snippet snippet = new Snippet(snippetID, "MOCKED_AUTHOR",
@@ -46,6 +51,12 @@ public class SnippetServiceImpl implements SnippetService {
     @Override
     public List<Snippet> viewAll() {
         return snippetRepository.getAllSnippets();
+    }
+
+    @Override
+    public SnippetDTO getSnippet(long id) {
+        Snippet snippet = snippetRepository.getSnippetsById(id);
+        return snippetMapper.turnIntoDTO(snippet);
     }
 
     @Override
