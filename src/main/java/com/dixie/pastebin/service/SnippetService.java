@@ -1,15 +1,17 @@
 package com.dixie.pastebin.service;
 
-import org.springframework.http.ResponseEntity;
+import com.dixie.pastebin.entity.Snippet;
+
+import java.util.List;
 
 public interface SnippetService {
 
-    ResponseEntity<String> create(String body, long expirationTime);
+    String create(String body, long expirationTime);
 
-    ResponseEntity<String> viewAll();
+    List<Snippet> viewAll();
 
-    ResponseEntity<String> update(long id, String body);
+    String update(long id, String body);
 
-    ResponseEntity<String> delete(long id);
+    String delete(long id);
 
 }
