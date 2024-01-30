@@ -1,5 +1,7 @@
 package com.dixie.pastebin.controller;
 
+import com.dixie.pastebin.dto.SnippetCreationDTO;
+import com.dixie.pastebin.dto.SnippetUpdateDTO;
 import com.dixie.pastebin.entity.Snippet;
 import com.dixie.pastebin.service.SnippetService;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +18,9 @@ public class SnippetController {
         this.snippetService = snippetService;
     }
 
-    @PostMapping
-    public String create(@RequestBody String body, @RequestBody long expirationTime) {
-        return snippetService.create(body, expirationTime);
+    @PostMapping()
+    public String create(@RequestBody SnippetCreationDTO snippetCreationDTO) {
+        return snippetService.create(snippetCreationDTO);
     }
 
     @GetMapping("/all")
@@ -27,8 +29,8 @@ public class SnippetController {
     }
 
     @PutMapping("/edit/{id}")
-    public String edit(@PathVariable long id, @RequestBody String body) {
-        return snippetService.update(id, body);
+    public String edit(@PathVariable long id, @RequestBody SnippetUpdateDTO snippetUpdateDTO) {
+        return snippetService.update(id, snippetUpdateDTO);
     }
 
     @DeleteMapping("/delete/{id}")
