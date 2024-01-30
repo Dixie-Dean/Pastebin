@@ -24,6 +24,9 @@ public class Snippet {
     @Column(name = "Body")
     private String body;
 
+    @Column(name = "Expiration_Time")
+    private long expirationTime;
+
     @Column(name = "Link", unique = true)
     private String link;
 
