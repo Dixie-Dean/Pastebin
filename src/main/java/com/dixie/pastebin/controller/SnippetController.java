@@ -3,7 +3,6 @@ package com.dixie.pastebin.controller;
 import com.dixie.pastebin.dto.SnippetCreationDTO;
 import com.dixie.pastebin.dto.SnippetDTO;
 import com.dixie.pastebin.dto.SnippetUpdateDTO;
-import com.dixie.pastebin.entity.Snippet;
 import com.dixie.pastebin.service.SnippetService;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +26,7 @@ public class SnippetController {
     }
 
     @GetMapping("/all")
-    public List<Snippet> viewAll() {
+    public List<SnippetDTO> viewAll() {
         return snippetService.viewAll();
     }
 

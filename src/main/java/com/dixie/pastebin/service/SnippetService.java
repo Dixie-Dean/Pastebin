@@ -3,7 +3,6 @@ package com.dixie.pastebin.service;
 import com.dixie.pastebin.dto.SnippetCreationDTO;
 import com.dixie.pastebin.dto.SnippetDTO;
 import com.dixie.pastebin.dto.SnippetUpdateDTO;
-import com.dixie.pastebin.entity.Snippet;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -13,7 +12,7 @@ public interface SnippetService {
 
     String create(SnippetCreationDTO snippetCreationDTO) throws URISyntaxException, MalformedURLException;
 
-    List<Snippet> viewAll();
+    List<SnippetDTO> viewAll();
 
     SnippetDTO getSnippet(long id);
 

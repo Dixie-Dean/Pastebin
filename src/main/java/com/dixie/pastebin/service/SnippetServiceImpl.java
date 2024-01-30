@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -49,8 +50,16 @@ public class SnippetServiceImpl implements SnippetService {
     }
 
     @Override
-    public List<Snippet> viewAll() {
-        return snippetRepository.getAllSnippets();
+    public List<SnippetDTO> viewAll() {
+        List<Snippet> snippets = snippetRepository.getAllSnippets();
+        List<SnippetDTO> snippetDTOs = new ArrayList<>();
+
+        for (Snippet snippet : snippets) {
+            SnippetDTO snippetDTO = snippetMapper.turnIntoDTO(snippet);
+            snippetDTOs.add(snippetDTO);
+        }
+
+        return snippetDTOs;
     }
 
     @Override
