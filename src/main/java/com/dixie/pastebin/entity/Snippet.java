@@ -15,7 +15,6 @@ import lombok.Setter;
 public class Snippet {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "Author")

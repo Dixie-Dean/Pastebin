@@ -6,6 +6,8 @@ import com.dixie.pastebin.entity.Snippet;
 import com.dixie.pastebin.service.SnippetService;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -19,7 +21,7 @@ public class SnippetController {
     }
 
     @PostMapping()
-    public String create(@RequestBody SnippetCreationDTO snippetCreationDTO) {
+    public String create(@RequestBody SnippetCreationDTO snippetCreationDTO) throws MalformedURLException, URISyntaxException {
         return snippetService.create(snippetCreationDTO);
     }
 
