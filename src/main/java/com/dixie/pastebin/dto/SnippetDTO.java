@@ -15,4 +15,5 @@ public class SnippetDTO {
     private String body;
     private long expirationTime;
     private String link;
+    private boolean isExpired;
 }

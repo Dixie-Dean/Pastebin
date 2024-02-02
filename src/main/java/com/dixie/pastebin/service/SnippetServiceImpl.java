@@ -42,8 +42,8 @@ public class SnippetServiceImpl implements SnippetService {
         builder.setPath("/pastebin/snippet/" + snippetID);
         URL url = builder.build().toURL();
 
-        Snippet snippet = new Snippet(snippetID, "MOCKED_AUTHOR",
-                snippetCreationDTO.getBody(), snippetCreationDTO.getExpirationTime(), url.toString());
+        Snippet snippet = new Snippet(snippetID, "MOCKED_AUTHOR", snippetCreationDTO.getBody(),
+                snippetCreationDTO.getExpirationTime(), url.toString(), false);
 
         snippetRepository.save(snippet);
         return "File uploaded!";

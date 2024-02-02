@@ -17,16 +17,19 @@ public class Snippet {
     @Id
     private long id;
 
-    @Column(name = "Author")
+    @Column(name = "author")
     private String author;
 
-    @Column(name = "Body")
+    @Column(name = "body")
     private String body;
 
-    @Column(name = "Expiration_Time")
+    @Column(name = "expiration_time")
     private long expirationTime;
 
-    @Column(name = "Link", unique = true)
+    @Column(name = "link", unique = true)
     private String link;
+
+    @Column(name = "is_expired")
+    private boolean isExpired;
 
 }
