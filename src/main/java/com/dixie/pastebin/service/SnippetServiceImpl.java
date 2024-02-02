@@ -18,11 +18,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class SnippetServiceImpl implements SnippetService {
-
     private final SnippetRepository snippetRepository;
-
     private final SnippetMapper snippetMapper;
-
     private final AtomicLong idCounter = new AtomicLong(0);
 
     public SnippetServiceImpl(SnippetRepository snippetRepository, SnippetMapper snippetMapper) {
@@ -42,9 +39,15 @@ public class SnippetServiceImpl implements SnippetService {
         builder.setPath("/pastebin/snippet/" + snippetID);
         URL url = builder.build().toURL();
 
-        Snippet snippet = new Snippet(snippetID, "MOCKED_AUTHOR", snippetCreationDTO.getBody(),
-                snippetCreationDTO.getExpirationTime(), url.toString(), false);
+        var expirationTime = System.currentTimeMillis() + snippetCreationDTO.getExpirationTime();
 
+        Snippet snippet = new Snippet(
+                snippetID,
+                "MOCKED_AUTHOR",
+                snippetCreationDTO.getBody(),
+                expirationTime,
+                url.toString()
+        );
         snippetRepository.save(snippet);
         return "File uploaded!";
     }

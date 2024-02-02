@@ -29,7 +29,4 @@ public class Snippet {
     @Column(name = "link", unique = true)
     private String link;
 
-    @Column(name = "is_expired")
-    private boolean isExpired;
-
 }
