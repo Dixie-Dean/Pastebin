@@ -11,13 +11,6 @@ import java.util.List;
 @Repository
 public interface SnippetRepository extends JpaRepository<Snippet, Long> {
 
-    @Query(value = "insert into pastebin.snippets(author, body, link, expiration_time) " +
-            "values (:author, :body, :link, :expiration_time) returning 'Snippet created!'", nativeQuery = true)
-    String create(@Param("author") String author,
-                  @Param("body") String body,
-                  @Param("link") String link,
-                  @Param("expiration_time") long expirationTime);
-
     @Query(value = "select * from pastebin.snippets", nativeQuery = true)
     List<Snippet> getAllSnippets();
 
