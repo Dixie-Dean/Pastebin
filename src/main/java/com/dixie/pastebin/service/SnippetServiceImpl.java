@@ -30,30 +30,15 @@ public class SnippetServiceImpl implements SnippetService {
 
     @Override
     public String create(SnippetCreationDTO snippetCreationDTO) throws URISyntaxException, MalformedURLException {
-        //generate ID
         var snippetID = RandomStringUtils.random(8, true, true);
+        var url = buildURL(snippetID);
+        var creationDateTime = LocalDateTime.now();
+        var expirationDateTime = creationDateTime.plusMinutes(snippetCreationDTO.getMinutesToLive());
 
-        //build URL
-        URIBuilder builder = new URIBuilder();
-        builder.setScheme("http");
-        builder.setHost("localhost");
-        builder.setPort(8080);
-        builder.setPath("/pastebin/snippet/" + snippetID);
-        URL url = builder.build().toURL();
-
-        //build creation time and deadline
-        var creationTime = LocalDateTime.now();
-        var expirationTime = creationTime.plusMinutes(snippetCreationDTO.getMinutesToLive());
-
-        //build snippet and save to repository
         Snippet snippet = new Snippet(
-                snippetID,
-                "MOCKED_AUTHOR",
+                snippetID, "MOCKED_AUTHOR",
                 snippetCreationDTO.getBody(),
-                creationTime,
-                expirationTime,
-                url.toString()
-        );
+                creationDateTime, expirationDateTime, url);
         snippetRepository.save(snippet);
         return "File uploaded!";
     }
@@ -87,4 +72,13 @@ public class SnippetServiceImpl implements SnippetService {
         return snippetRepository.delete(id);
     }
 
+    private String buildURL(String snippetID) throws URISyntaxException, MalformedURLException {
+        URIBuilder builder = new URIBuilder();
+        builder.setScheme("http");
+        builder.setHost("localhost");
+        builder.setPort(8080);
+        builder.setPath("/pastebin/snippet/" + snippetID);
+        URL url = builder.build().toURL();
+        return url.toString();
+    }
 }
