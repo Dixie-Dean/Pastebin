@@ -9,15 +9,13 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 public interface SnippetService {
-
     String create(SnippetCreationDTO snippetCreationDTO) throws URISyntaxException, MalformedURLException;
 
     List<SnippetDTO> viewAll();
 
-    SnippetDTO getSnippet(long id);
+    SnippetDTO getSnippet(String id);
 
-    String update(long id, SnippetUpdateDTO snippetUpdateDTO);
+    String update(String id, SnippetUpdateDTO snippetUpdateDTO);
 
-    String delete(long id);
-
+    String delete(String id);
 }

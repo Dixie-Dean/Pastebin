@@ -15,7 +15,7 @@ import lombok.Setter;
 public class Snippet {
 
     @Id
-    private long id;
+    private String id;
 
     @Column(name = "author")
     private String author;

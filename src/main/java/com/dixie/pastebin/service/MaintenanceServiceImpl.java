@@ -21,7 +21,7 @@ public class MaintenanceServiceImpl implements MaintenanceService {
         List<Snippet> snippets = snippetRepository.getAllSnippets();
         for (Snippet snippet : snippets) {
             if (snippet.getExpirationTime() < System.currentTimeMillis()) {
-                snippetRepository.deleteById(snippet.getId());
+                snippetRepository.delete(snippet.getId());
             }
         }
     }

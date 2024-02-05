@@ -31,17 +31,17 @@ public class SnippetController {
     }
 
     @GetMapping("/snippet/{id}")
-    public SnippetDTO getSnippet(@PathVariable long id) {
+    public SnippetDTO getSnippet(@PathVariable String id) {
         return snippetService.getSnippet(id);
     }
 
     @PutMapping("/edit/{id}")
-    public String edit(@PathVariable long id, @RequestBody SnippetUpdateDTO snippetUpdateDTO) {
+    public String edit(@PathVariable String id, @RequestBody SnippetUpdateDTO snippetUpdateDTO) {
         return snippetService.update(id, snippetUpdateDTO);
     }
 
     @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable long id) {
+    public String delete(@PathVariable String id) {
         return snippetService.delete(id);
     }
 

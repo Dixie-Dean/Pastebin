@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SnippetDTO {
-    private long id;
+    private String id;
     private String author;
     private String body;
     private long expirationTime;
