@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -23,8 +25,11 @@ public class Snippet {
     @Column(name = "body")
     private String body;
 
+    @Column(name = "creation_time")
+    private LocalDateTime creationDateTime;
+
     @Column(name = "expiration_time")
-    private long expirationTime;
+    private LocalDateTime expirationDateTime;
 
     @Column(name = "link", unique = true)
     private String link;

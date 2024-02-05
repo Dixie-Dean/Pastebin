@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +30,10 @@ public class SnippetServiceImpl implements SnippetService {
 
     @Override
     public String create(SnippetCreationDTO snippetCreationDTO) throws URISyntaxException, MalformedURLException {
-
+        //generate ID
         var snippetID = RandomStringUtils.random(8, true, true);
 
+        //build URL
         URIBuilder builder = new URIBuilder();
         builder.setScheme("http");
         builder.setHost("localhost");
@@ -39,12 +41,16 @@ public class SnippetServiceImpl implements SnippetService {
         builder.setPath("/pastebin/snippet/" + snippetID);
         URL url = builder.build().toURL();
 
-        var expirationTime = System.currentTimeMillis() + snippetCreationDTO.getExpirationTime();
+        //build creation time and deadline
+        var creationTime = LocalDateTime.now();
+        var expirationTime = creationTime.plusMinutes(snippetCreationDTO.getMinutesToLive());
 
+        //build snippet and save to repository
         Snippet snippet = new Snippet(
                 snippetID,
                 "MOCKED_AUTHOR",
                 snippetCreationDTO.getBody(),
+                creationTime,
                 expirationTime,
                 url.toString()
         );

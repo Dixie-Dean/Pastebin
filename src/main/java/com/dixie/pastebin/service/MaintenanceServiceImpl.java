@@ -5,6 +5,7 @@ import com.dixie.pastebin.repository.SnippetRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -21,7 +22,7 @@ public class MaintenanceServiceImpl implements MaintenanceService {
     public void isSnippetExpired() {
         List<Snippet> snippets = snippetRepository.getAllSnippets();
         for (Snippet snippet : snippets) {
-            if (snippet.getExpirationTime() < System.currentTimeMillis()) {
+            if (LocalDateTime.now().isAfter(snippet.getExpirationDateTime())) {
                 snippetRepository.delete(snippet.getId());
             }
         }

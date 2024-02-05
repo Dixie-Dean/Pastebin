@@ -1,6 +1,9 @@
 package com.dixie.pastebin.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -8,5 +11,5 @@ import lombok.*;
 @Setter
 public class SnippetCreationDTO {
     private String body;
-    private long expirationTime;
+    private long minutesToLive;
 }

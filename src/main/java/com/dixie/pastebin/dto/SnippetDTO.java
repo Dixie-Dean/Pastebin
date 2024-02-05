@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -13,6 +15,7 @@ public class SnippetDTO {
     private String id;
     private String author;
     private String body;
-    private long expirationTime;
+    private LocalDateTime creationDateTime;
+    private LocalDateTime expirationDateTime;
     private String link;
 }
