@@ -6,6 +6,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class MaintenanceServiceImpl implements MaintenanceService {
@@ -16,7 +17,7 @@ public class MaintenanceServiceImpl implements MaintenanceService {
     }
 
     @Override
-    @Scheduled(fixedDelay = 60000)
+    @Scheduled(fixedDelay = 1, initialDelay = 1, timeUnit = TimeUnit.MINUTES)
     public void isSnippetExpired() {
         List<Snippet> snippets = snippetRepository.getAllSnippets();
         for (Snippet snippet : snippets) {
