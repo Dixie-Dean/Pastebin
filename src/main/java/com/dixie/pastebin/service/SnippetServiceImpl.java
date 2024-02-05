@@ -67,7 +67,7 @@ public class SnippetServiceImpl implements SnippetService {
 
     @Override
     public SnippetDTO getSnippet(long id) {
-        Snippet snippet = snippetRepository.getSnippetsById(id);
+        Snippet snippet = snippetRepository.getSnippetById(id);
         return snippetMapper.turnIntoDTO(snippet);
     }
 
