@@ -1,4 +1,4 @@
-package com.dixie.pastebin.dto.auth;
+package com.dixie.pastebin.dto.authentication;
 
 import lombok.Getter;
 import lombok.Setter;

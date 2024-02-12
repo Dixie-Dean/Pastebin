@@ -1,25 +1,28 @@
 package com.dixie.pastebin.service;
 
-import com.dixie.pastebin.dto.auth.SignInData;
-import com.dixie.pastebin.dto.auth.RegisterData;
+import com.dixie.pastebin.dto.authentication.SignInData;
+import com.dixie.pastebin.dto.authentication.RegisterData;
 import com.dixie.pastebin.entity.PastebinUser;
 import com.dixie.pastebin.exception.UserAlreadyExistException;
 import com.dixie.pastebin.exception.UserNotFoundException;
-import com.dixie.pastebin.repository.SecurityRepository;
+import com.dixie.pastebin.repository.UserRepository;
 import com.dixie.pastebin.security.role.Role;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SecurityServiceImpl implements SecurityService {
-    private final SecurityRepository securityRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public SecurityServiceImpl(SecurityRepository securityRepository) {
-        this.securityRepository = securityRepository;
+    public SecurityServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public String register(RegisterData registerData) throws UserAlreadyExistException {
-        if (securityRepository.existsByEmail(registerData.getEmail())) {
+        if (userRepository.existsByEmail(registerData.getEmail())) {
             throw new UserAlreadyExistException("User with such email is already registered!");
         }
 
@@ -27,15 +30,16 @@ public class SecurityServiceImpl implements SecurityService {
         user.setUsername(registerData.getUsername());
         user.setLastname(registerData.getLastname());
         user.setEmail(registerData.getEmail());
-        user.setRole(Role.USER);
+        user.setPassword(passwordEncoder.encode(registerData.getPassword()));
+        user.setRole(String.valueOf(Role.USER));
 
-        securityRepository.save(user);
+        userRepository.save(user);
         return "Registration successful!";
     }
 
     @Override
     public String signIn(SignInData signInData) {
-        if (!securityRepository.existsByEmail(signInData.getEmail())) {
+        if (!userRepository.existsByEmail(signInData.getEmail())) {
             throw new UserNotFoundException("User with such email doesn't exist!");
         }
 

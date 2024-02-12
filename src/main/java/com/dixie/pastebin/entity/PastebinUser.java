@@ -1,6 +1,5 @@
 package com.dixie.pastebin.entity;
 
-import com.dixie.pastebin.security.role.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,6 +32,6 @@ public class PastebinUser {
     private String password;
 
     @Column(name = "role")
-    private Role role;
+    private String role;
 
 }
