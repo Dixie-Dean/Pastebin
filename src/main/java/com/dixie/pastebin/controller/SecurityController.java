@@ -1,12 +1,11 @@
 package com.dixie.pastebin.controller;
 
-import com.dixie.pastebin.dto.authentication.SignInData;
 import com.dixie.pastebin.dto.authentication.RegisterData;
+import com.dixie.pastebin.dto.authentication.SignInData;
 import com.dixie.pastebin.exception.UserAlreadyExistException;
 import com.dixie.pastebin.service.SecurityService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
