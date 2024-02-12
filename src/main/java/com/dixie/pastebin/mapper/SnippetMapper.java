@@ -1,6 +1,6 @@
 package com.dixie.pastebin.mapper;
 
-import com.dixie.pastebin.dto.SnippetDTO;
+import com.dixie.pastebin.dto.snippet.SnippetDTO;
 import com.dixie.pastebin.entity.Snippet;
 import org.mapstruct.Mapper;
 

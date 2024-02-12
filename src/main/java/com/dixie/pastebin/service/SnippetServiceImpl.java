@@ -1,8 +1,8 @@
 package com.dixie.pastebin.service;
 
-import com.dixie.pastebin.dto.SnippetCreationDTO;
-import com.dixie.pastebin.dto.SnippetDTO;
-import com.dixie.pastebin.dto.SnippetUpdateDTO;
+import com.dixie.pastebin.dto.snippet.SnippetCreationDTO;
+import com.dixie.pastebin.dto.snippet.SnippetDTO;
+import com.dixie.pastebin.dto.snippet.SnippetUpdateDTO;
 import com.dixie.pastebin.entity.Snippet;
 import com.dixie.pastebin.mapper.SnippetMapper;
 import com.dixie.pastebin.repository.SnippetRepository;

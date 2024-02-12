@@ -1,4 +1,4 @@
-package com.dixie.pastebin.dto;
+package com.dixie.pastebin.dto.snippet;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class SnippetUpdateDTO {
+public class SnippetCreationDTO {
     private String body;
+    private long minutesToLive;
 }

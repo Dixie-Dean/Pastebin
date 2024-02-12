@@ -1,4 +1,4 @@
-package com.dixie.pastebin.dto;
+package com.dixie.pastebin.dto.snippet;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
