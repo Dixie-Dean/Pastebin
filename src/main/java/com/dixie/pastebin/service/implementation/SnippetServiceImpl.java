@@ -1,4 +1,4 @@
-package com.dixie.pastebin.service;
+package com.dixie.pastebin.service.implementation;
 
 import com.dixie.pastebin.dto.snippet.SnippetCreationDTO;
 import com.dixie.pastebin.dto.snippet.SnippetDTO;
@@ -6,6 +6,7 @@ import com.dixie.pastebin.dto.snippet.SnippetUpdateDTO;
 import com.dixie.pastebin.entity.Snippet;
 import com.dixie.pastebin.mapper.SnippetMapper;
 import com.dixie.pastebin.repository.SnippetRepository;
+import com.dixie.pastebin.service.SnippetService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.stereotype.Service;

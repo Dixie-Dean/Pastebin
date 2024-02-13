@@ -1,4 +1,4 @@
-package com.dixie.pastebin.service;
+package com.dixie.pastebin.service.implementation;
 
 import com.dixie.pastebin.dto.authentication.SignInData;
 import com.dixie.pastebin.dto.authentication.RegisterData;
@@ -7,6 +7,7 @@ import com.dixie.pastebin.exception.UserAlreadyExistException;
 import com.dixie.pastebin.exception.UserNotFoundException;
 import com.dixie.pastebin.repository.UserRepository;
 import com.dixie.pastebin.security.role.Role;
+import com.dixie.pastebin.service.SecurityService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

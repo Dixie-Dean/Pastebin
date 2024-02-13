@@ -1,7 +1,8 @@
-package com.dixie.pastebin.service;
+package com.dixie.pastebin.service.implementation;
 
 import com.dixie.pastebin.entity.Snippet;
 import com.dixie.pastebin.repository.SnippetRepository;
+import com.dixie.pastebin.service.MaintenanceService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
