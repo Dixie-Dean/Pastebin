@@ -1,6 +1,5 @@
 package com.dixie.pastebin.configuration;
 
-import com.dixie.pastebin.exception.UserNotFoundException;
 import com.dixie.pastebin.repository.UserRepository;
 import com.dixie.pastebin.security.user.PastebinUserDetails;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -23,9 +23,9 @@ public class JavaConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
+    public UserDetailsService userDetailsService() throws UsernameNotFoundException {
         return email -> userRepository.findPastebinUserByEmail(email).map(PastebinUserDetails::new)
-                .orElseThrow(() -> new UserNotFoundException("User with such email doesn't exist"));
+                .orElseThrow(() -> new UsernameNotFoundException("User with such email doesn't exist!"));
     }
 
     @Bean
