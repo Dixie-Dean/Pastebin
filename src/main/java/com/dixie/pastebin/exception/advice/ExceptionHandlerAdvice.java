@@ -1,6 +1,7 @@
 package com.dixie.pastebin.exception.advice;
 
 import com.dixie.pastebin.exception.UserAlreadyExistException;
+import com.dixie.pastebin.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,4 +14,10 @@ public class ExceptionHandlerAdvice {
     public ResponseEntity<String> userAlreadyExistExceptionHandler(UserAlreadyExistException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
     }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> userNotFoundExceptionHandler(UserNotFoundException exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+
 }
