@@ -22,18 +22,18 @@ public class JavaConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService() throws UsernameNotFoundException {
-        return email -> userRepository.findPastebinUserByEmail(email).map(PastebinUserDetails::new)
-                .orElseThrow(() -> new UsernameNotFoundException("User with such email doesn't exist!"));
-    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-        authenticationProvider.setUserDetailsService(userDetailsService());
-        return authenticationProvider;
-    }
+//    @Bean
+//    public UserDetailsService userDetailsService() throws UsernameNotFoundException {
+//        return email -> userRepository.findPastebinUserByEmail(email).map(PastebinUserDetails::new)
+//                .orElseThrow(() -> new UsernameNotFoundException("User with such email doesn't exist!"));
+//    }
+//
+//    @Bean
+//    public AuthenticationProvider authenticationProvider() {
+//        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+//        authenticationProvider.setPasswordEncoder(passwordEncoder());
+//        authenticationProvider.setUserDetailsService(userDetailsService());
+//        return authenticationProvider;
+//    }
 
 }
