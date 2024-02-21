@@ -1,7 +1,9 @@
 package com.dixie.pastebin.security.user;
 
 import com.dixie.pastebin.entity.PastebinUser;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +12,8 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @RequiredArgsConstructor
+@Getter
+@ToString
 public class PastebinUserDetails implements UserDetails {
 
     private final PastebinUser pastebinUser;
