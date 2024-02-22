@@ -1,5 +1,6 @@
 package com.dixie.pastebin.security;
 
+import com.dixie.pastebin.security.jwt.JwtAccessDeniedHandler;
 import com.dixie.pastebin.security.jwt.JwtAuthenticationFilter;
 import com.dixie.pastebin.security.jwt.JwtEntryPoint;
 import lombok.RequiredArgsConstructor;
@@ -15,9 +16,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig {
+public class SecurityConfiguration {
 
     private final JwtEntryPoint jwtEntryPoint;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
@@ -29,9 +31,12 @@ public class SecurityConfig {
                     auth.requestMatchers("/sign-in").permitAll();
                     auth.anyRequest().authenticated();
                 })
-                .exceptionHandling(exceptions -> exceptions.authenticationEntryPoint(this.jwtEntryPoint))
+                .exceptionHandling(exceptions -> {
+                    exceptions.authenticationEntryPoint(this.jwtEntryPoint);
+                    exceptions.accessDeniedHandler(this.jwtAccessDeniedHandler);
+                })
                 .sessionManagement(sessions -> sessions.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(this.jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

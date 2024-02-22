@@ -1,8 +1,6 @@
 package com.dixie.pastebin.configuration;
 
 import com.dixie.pastebin.repository.UserRepository;
-import com.dixie.pastebin.security.jwt.JwtAuthenticationFilter;
-import com.dixie.pastebin.security.jwt.JwtManager;
 import com.dixie.pastebin.security.user.PastebinUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @RequiredArgsConstructor
-public class JavaConfig {
+public class ApplicationConfiguration {
+
     private final UserRepository userRepository;
 
     @Bean
@@ -36,16 +35,6 @@ public class JavaConfig {
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         authenticationProvider.setUserDetailsService(userDetailsService());
         return authenticationProvider;
-    }
-
-    @Bean
-    public JwtManager jwtManager() {
-        return new JwtManager();
-    }
-
-    @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter() {
-        return new JwtAuthenticationFilter(userDetailsService(), jwtManager());
     }
 
 }
