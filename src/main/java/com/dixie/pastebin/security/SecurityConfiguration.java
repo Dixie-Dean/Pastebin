@@ -56,7 +56,10 @@ public class SecurityConfiguration {
                     auth.requestMatchers("/sign-in").permitAll();
                     auth.anyRequest().authenticated();
                 })
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults())
+                        .authenticationEntryPoint(this.jwtEntryPoint)
+                        .accessDeniedHandler(this.jwtAccessDeniedHandler)
+                )
                 .sessionManagement(sessions -> sessions.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }

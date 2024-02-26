@@ -8,8 +8,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class ExceptionResponse {
-    private String exception;
-    private String inAdviceMessage;
-    private String exceptionMessage;
+    private String message;
     private int status;
 }
