@@ -1,56 +1,38 @@
 package com.dixie.pastebin.security.jwt;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.jwt.JwtClaimsSet;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Component;
 
-import java.security.Key;
-import java.util.Date;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 @Component
+@RequiredArgsConstructor
 public class JwtManager {
-    private static final long EXPIRATION_TIME = 1000 * 60 * 24;
 
-    @Value("${secret.key}")
-    private String secretKey;
+    private final JwtEncoder jwtEncoder;
 
     public String generateToken(Authentication authentication) {
-        var currentDate = new Date();
-        var expirationDate = new Date(currentDate.getTime() + EXPIRATION_TIME);
+        Instant now = Instant.now();
+        long expiresIn = 24;
 
-        return Jwts.builder()
-                .setSubject(authentication.getName())
-                .setIssuedAt(new Date())
-                .setExpiration(expirationDate)
-                .signWith(getSignInKey())
-                .compact();
+        String authorities = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority).toString();
+
+        JwtClaimsSet claims = JwtClaimsSet.builder()
+                .issuer("self")
+                .issuedAt(now)
+                .expiresAt(now.plus(expiresIn, ChronoUnit.HOURS))
+                .subject(authentication.getName())
+                .claim("authorities", authorities)
+                .build();
+
+        return this.jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
 
-    public String extractUsername(String token) {
-        Claims claims = Jwts
-                .parserBuilder()
-                .setSigningKey(getSignInKey())
-                .build().parseClaimsJws(token)
-                .getBody();
-        return claims.getSubject();
-    }
-
-    public boolean isTokenValid(String token) {
-        try {
-            Jwts.parserBuilder().setSigningKey(getSignInKey()).build().parseClaimsJws(token);
-            return true;
-        } catch (Exception exception) {
-            System.out.println(exception.getMessage());
-        }
-        return false;
-    }
-
-    private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-        return Keys.hmacShaKeyFor(keyBytes);
-    }
 }

@@ -52,10 +52,10 @@ public class SecurityServiceImpl implements SecurityService {
                 new UsernamePasswordAuthenticationToken(signInData.getEmail(), signInData.getPassword())
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtManager.generateToken(authentication);
-
         PastebinUserDetails principal = (PastebinUserDetails) authentication.getPrincipal();
         String principalUsername = principal.getPastebinUser().getUsername();
+
+        String token = jwtManager.generateToken(authentication);
 
         SignInResponse response = new SignInResponse(token, principalUsername);
         return new ResponseEntity<>(response, HttpStatus.OK);
