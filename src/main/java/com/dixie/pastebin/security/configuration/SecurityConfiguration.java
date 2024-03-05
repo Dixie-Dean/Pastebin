@@ -1,5 +1,7 @@
 package com.dixie.pastebin.security.configuration;
 
+import com.dixie.pastebin.security.authentication.model.PastebinUserDetails;
+import com.dixie.pastebin.security.authentication.repository.UserRepository;
 import com.dixie.pastebin.security.jwt.JwtAccessDeniedHandler;
 import com.dixie.pastebin.security.jwt.JwtEntryPoint;
 import com.nimbusds.jose.jwk.JWK;
@@ -10,11 +12,17 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
@@ -36,8 +44,11 @@ public class SecurityConfiguration {
     private final RSAPrivateKey privateKey;
     private final JwtEntryPoint jwtEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final UserRepository userRepository;
 
-    public SecurityConfiguration(JwtEntryPoint jwtEntryPoint, JwtAccessDeniedHandler jwtAccessDeniedHandler) throws NoSuchAlgorithmException {
+    public SecurityConfiguration(JwtEntryPoint jwtEntryPoint,
+                                 JwtAccessDeniedHandler jwtAccessDeniedHandler,
+                                 UserRepository userRepository) throws NoSuchAlgorithmException {
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
         keyPairGenerator.initialize(2048);
         KeyPair keyPair = keyPairGenerator.generateKeyPair();
@@ -45,6 +56,7 @@ public class SecurityConfiguration {
         this.privateKey = (RSAPrivateKey) keyPair.getPrivate();
         this.jwtEntryPoint = jwtEntryPoint;
         this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
+        this.userRepository = userRepository;
     }
 
     @Bean
@@ -86,6 +98,25 @@ public class SecurityConfiguration {
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
         return jwtAuthenticationConverter;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() throws UsernameNotFoundException {
+        return email -> userRepository.findPastebinUserByEmail(email).map(PastebinUserDetails::new)
+                .orElseThrow(() -> new UsernameNotFoundException("User with such email doesn't exist!"));
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        authenticationProvider.setUserDetailsService(userDetailsService());
+        return authenticationProvider;
     }
 
 }
