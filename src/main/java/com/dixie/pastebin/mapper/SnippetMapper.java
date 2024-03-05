@@ -1,7 +1,7 @@
 package com.dixie.pastebin.mapper;
 
-import com.dixie.pastebin.dto.snippet.SnippetDTO;
-import com.dixie.pastebin.entity.Snippet;
+import com.dixie.pastebin.application.model.dto.SnippetDTO;
+import com.dixie.pastebin.application.model.entity.Snippet;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

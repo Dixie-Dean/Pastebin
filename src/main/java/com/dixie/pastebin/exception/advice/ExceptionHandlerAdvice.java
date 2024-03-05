@@ -1,6 +1,6 @@
 package com.dixie.pastebin.exception.advice;
 
-import com.dixie.pastebin.dto.authentication.ExceptionResponse;
+import com.dixie.pastebin.security.authentication.model.response.ExceptionResponse;
 import com.dixie.pastebin.exception.UserAlreadyExistException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
