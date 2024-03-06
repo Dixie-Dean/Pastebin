@@ -4,11 +4,12 @@ import com.dixie.pastebin.application.model.dto.SnippetCreationDTO;
 import com.dixie.pastebin.application.model.dto.SnippetDTO;
 import com.dixie.pastebin.application.model.dto.SnippetUpdateDTO;
 import com.dixie.pastebin.application.model.entity.Snippet;
-import com.dixie.pastebin.mapper.SnippetMapper;
 import com.dixie.pastebin.application.repository.SnippetRepository;
 import com.dixie.pastebin.application.service.SnippetService;
+import com.dixie.pastebin.mapper.SnippetMapper;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.client.utils.URIBuilder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.net.MalformedURLException;
@@ -35,9 +36,10 @@ public class SnippetServiceImpl implements SnippetService {
         var url = buildURL(snippetID);
         var creationDateTime = LocalDateTime.now();
         var expirationDateTime = creationDateTime.plusMinutes(snippetCreationDTO.getMinutesToLive());
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
 
         Snippet snippet = new Snippet(
-                snippetID, "MOCKED_AUTHOR",
+                snippetID, authentication.getName(),
                 snippetCreationDTO.getBody(),
                 creationDateTime, expirationDateTime, url);
         snippetRepository.save(snippet);
