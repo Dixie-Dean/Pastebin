@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/snippet/snippet_V1__initialize_snippet_table.sql
+  - include:
+      file: db/changelog/user/user_V1__initialize_user_table.sql
