@@ -1,7 +1,7 @@
 create table pastebin.users (user_id bigserial not null,
-                             email varchar(255) not null unique,
+                             username varchar(255) not null,
                              lastname varchar(255) not null,
+                             email varchar(255) not null unique,
                              password varchar(255) not null,
                              role varchar(255),
-                             username varchar(255) not null,
                              primary key (user_id))
