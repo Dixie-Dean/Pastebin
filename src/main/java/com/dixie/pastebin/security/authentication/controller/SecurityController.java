@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class SecurityController {
+
     private final SecurityService securityService;
 
     public SecurityController(SecurityService securityService) {
@@ -27,5 +28,4 @@ public class SecurityController {
     public ResponseEntity<SignInResponse> signIn(@RequestBody SignInData signInData) {
         return securityService.signIn(signInData);
     }
-
 }

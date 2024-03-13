@@ -8,6 +8,8 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<PastebinUser, Long> {
+
     boolean existsByEmail(String email);
+
     Optional<PastebinUser> findPastebinUserByEmail(String email);
 }

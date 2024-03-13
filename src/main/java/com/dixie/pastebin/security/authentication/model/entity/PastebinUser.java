@@ -33,5 +33,4 @@ public class PastebinUser {
 
     @Column(name = "role")
     private String role;
-
 }

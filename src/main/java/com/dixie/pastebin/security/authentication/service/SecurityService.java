@@ -7,6 +7,8 @@ import com.dixie.pastebin.exception.UserAlreadyExistException;
 import org.springframework.http.ResponseEntity;
 
 public interface SecurityService {
+
     String register(RegisterData registerData) throws UserAlreadyExistException;
+
     ResponseEntity<SignInResponse> signIn(SignInData signInData);
 }

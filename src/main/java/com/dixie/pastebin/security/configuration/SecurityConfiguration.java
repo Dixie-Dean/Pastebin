@@ -40,6 +40,7 @@ import java.security.interfaces.RSAPublicKey;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+
     private final RSAPublicKey publicKey;
     private final RSAPrivateKey privateKey;
     private final JwtEntryPoint jwtEntryPoint;
@@ -118,5 +119,4 @@ public class SecurityConfiguration {
         authenticationProvider.setUserDetailsService(userDetailsService());
         return authenticationProvider;
     }
-
 }

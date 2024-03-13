@@ -22,6 +22,7 @@ import java.util.List;
 
 @Service
 public class SnippetServiceImpl implements SnippetService {
+
     private final SnippetRepository snippetRepository;
     private final SnippetMapper snippetMapper;
 

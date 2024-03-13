@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class MaintenanceServiceImpl implements MaintenanceService {
+
     private final SnippetRepository snippetRepository;
 
     public MaintenanceServiceImpl(SnippetRepository snippetRepository) {
@@ -28,5 +29,4 @@ public class MaintenanceServiceImpl implements MaintenanceService {
             }
         }
     }
-
 }
