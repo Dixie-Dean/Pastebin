@@ -18,7 +18,7 @@ public class Snippet {
     @Id
     private String id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "author", referencedColumnName = "email")
     private PastebinUser author;
 
@@ -33,5 +33,4 @@ public class Snippet {
 
     @Column(name = "link", unique = true)
     private String link;
-
 }
