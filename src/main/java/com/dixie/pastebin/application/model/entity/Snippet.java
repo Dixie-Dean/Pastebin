@@ -1,10 +1,8 @@
 package com.dixie.pastebin.application.model.entity;
 
+import com.dixie.pastebin.security.authentication.model.entity.PastebinUser;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 @Entity
 @Table(schema = "pastebin", name = "snippets")
 public class Snippet {
@@ -19,8 +18,9 @@ public class Snippet {
     @Id
     private String id;
 
-    @Column(name = "author")
-    private String author;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "author", referencedColumnName = "email")
+    private PastebinUser author;
 
     @Column(name = "body")
     private String body;

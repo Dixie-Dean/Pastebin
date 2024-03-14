@@ -7,9 +7,12 @@ import com.dixie.pastebin.application.model.entity.Snippet;
 import com.dixie.pastebin.application.repository.SnippetRepository;
 import com.dixie.pastebin.application.service.SnippetService;
 import com.dixie.pastebin.mapper.SnippetMapper;
+import com.dixie.pastebin.security.authentication.model.entity.PastebinUser;
+import com.dixie.pastebin.security.authentication.repository.UserRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import java.net.MalformedURLException;
@@ -18,16 +21,19 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
 public class SnippetServiceImpl implements SnippetService {
 
     private final SnippetRepository snippetRepository;
+    private final UserRepository userRepository;
     private final SnippetMapper snippetMapper;
 
-    public SnippetServiceImpl(SnippetRepository snippetRepository, SnippetMapper snippetMapper) {
+    public SnippetServiceImpl(SnippetRepository snippetRepository, UserRepository userRepository, SnippetMapper snippetMapper) {
         this.snippetRepository = snippetRepository;
+        this.userRepository = userRepository;
         this.snippetMapper = snippetMapper;
     }
 
@@ -38,12 +44,14 @@ public class SnippetServiceImpl implements SnippetService {
         var creationDateTime = LocalDateTime.now();
         var expirationDateTime = creationDateTime.plusMinutes(snippetCreationDTO.getMinutesToLive());
         var authentication = SecurityContextHolder.getContext().getAuthentication();
+        var pastebinUser = userRepository.findPastebinUserByEmail(authentication.getName());
 
-        Snippet snippet = new Snippet(
-                snippetID, authentication.getName(),
-                snippetCreationDTO.getBody(),
-                creationDateTime, expirationDateTime, url);
-        snippetRepository.save(snippet);
+        if (pastebinUser.isPresent()) {
+            Snippet snippet = new Snippet(snippetID, pastebinUser.get(),
+                    snippetCreationDTO.getBody(), creationDateTime,
+                    expirationDateTime, url);
+            snippetRepository.save(snippet);
+        }
         return "File uploaded!";
     }
 
@@ -56,7 +64,6 @@ public class SnippetServiceImpl implements SnippetService {
             SnippetDTO snippetDTO = snippetMapper.turnIntoDTO(snippet);
             snippetDTOs.add(snippetDTO);
         }
-
         return snippetDTOs;
     }
 
