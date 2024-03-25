@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface SnippetMapper {
 
-    SnippetDTO turnIntoDTO(Snippet snippet);
+    SnippetDTO toSnippetDTO(Snippet snippet);
 
-    Snippet turnIntoSnippet(SnippetDTO snippetDTO);
+    Snippet toSnippet(SnippetDTO snippetDTO);
 }
