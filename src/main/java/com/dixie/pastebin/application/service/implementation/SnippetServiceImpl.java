@@ -7,12 +7,10 @@ import com.dixie.pastebin.application.model.entity.Snippet;
 import com.dixie.pastebin.application.repository.SnippetRepository;
 import com.dixie.pastebin.application.service.SnippetService;
 import com.dixie.pastebin.mapper.SnippetMapper;
-import com.dixie.pastebin.security.authentication.model.entity.PastebinUser;
 import com.dixie.pastebin.security.authentication.repository.UserRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import java.net.MalformedURLException;
@@ -21,7 +19,6 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -61,7 +58,7 @@ public class SnippetServiceImpl implements SnippetService {
         List<SnippetDTO> snippetDTOs = new ArrayList<>();
 
         for (Snippet snippet : snippets) {
-            SnippetDTO snippetDTO = snippetMapper.turnIntoDTO(snippet);
+            SnippetDTO snippetDTO = snippetMapper.toSnippetDTO(snippet);
             snippetDTOs.add(snippetDTO);
         }
         return snippetDTOs;
@@ -70,7 +67,7 @@ public class SnippetServiceImpl implements SnippetService {
     @Override
     public SnippetDTO getSnippet(String id) {
         Snippet snippet = snippetRepository.getSnippetById(id);
-        return snippetMapper.turnIntoDTO(snippet);
+        return snippetMapper.toSnippetDTO(snippet);
     }
 
     @Override
